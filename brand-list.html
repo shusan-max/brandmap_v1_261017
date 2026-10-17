@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ママの子供服ブランドマップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+<style>
+/* Layout: soft header band → sticky category tabs + focus chips → responsive card grid (3→2→1 columns) */
+:root{
+  --bg:#f8f3ef;          /* ミルクベージュ */
+  --surface:#fffdfb;
+  --ink:#4a3f3c;
+  --ink-soft:#8a7b76;
+  --rose:#c99a9a;        /* くすみピンク */
+  --rose-deep:#a87272;
+  --sand:#e8dccf;        /* ベージュ */
+  --sage:#a9b3a0;        /* ニュアンスグリーン */
+  --line:#eadfd7;
+  --chip:#f1e6df;
+  --on-accent:#fffaf7;
+  --shadow:0 1px 2px rgba(120,90,80,.06),0 8px 24px rgba(120,90,80,.07);
+  --f-display:"Cormorant Garamond","Times New Roman",serif;
+  --f-body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#231d1c;--surface:#2d2624;--ink:#f1e7e2;--ink-soft:#b8a8a2;--rose:#d4a5a5;--rose-deep:#e3b8b8;
+  --sand:#4a3e38;--sage:#9eab95;--line:#3d3431;--chip:#3a302d;--on-accent:#2a2120;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#231d1c;--surface:#2d2624;--ink:#f1e7e2;--ink-soft:#b8a8a2;--rose:#d4a5a5;--rose-deep:#e3b8b8;
+  --sand:#4a3e38;--sage:#9eab95;--line:#3d3431;--chip:#3a302d;--on-accent:#2a2120;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.75;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header{padding-block:44px 28px}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--rose-deep);font-weight:500}
+h1{font-family:var(--f-body);font-weight:700;font-size:clamp(26px,4.6vw,38px);line-height:1.35;margin:.3em 0 .4em;text-wrap:balance}
+h1 em{font-family:var(--f-display);font-style:italic;font-weight:500;color:var(--rose-deep);font-size:1.15em;letter-spacing:.01em}
+.lead{color:var(--ink-soft);max-width:60ch;margin:0}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{padding-block:12px;display:flex;flex-direction:column;gap:10px}
+.tabs{display:flex;gap:6px;background:var(--chip);padding:4px;border-radius:999px;width:fit-content;max-width:100%;overflow-x:auto}
+.tab{appearance:none;border:0;background:transparent;color:var(--ink-soft);font:inherit;font-weight:500;font-size:14px;
+  padding:8px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:8px;transition:background .2s,color .2s}
+.tab .n{font-size:11px;font-variant-numeric:tabular-nums;opacity:.7}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.tab:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--rose-deep);outline-offset:2px}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.filters .lbl{font-size:12px;color:var(--ink-soft);margin-right:4px;letter-spacing:.06em}
+.chip{appearance:none;font:inherit;font-size:12.5px;border:1px solid var(--line);background:transparent;color:var(--ink-soft);
+  padding:4px 12px;border-radius:999px;cursor:pointer;transition:all .2s}
+.chip[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:var(--on-accent)}
+
+main{padding-block:28px 56px}
+.cat-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-bottom:18px}
+.cat-head h2{margin:0;font-size:20px;font-weight:700}
+.cat-head p{margin:0;color:var(--ink-soft);font-size:13.5px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+@media (max-width:420px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-width:0;
+  transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-3px)}
+.swatch{height:64px;position:relative;display:flex;align-items:flex-end;padding:0 20px 10px}
+.swatch .origin{font-size:11px;letter-spacing:.12em;color:var(--ink);background:var(--surface);padding:2px 10px;border-radius:999px;opacity:.9}
+.body{padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.name{display:flex;flex-direction:column;gap:0}
+.name .en{font-family:var(--f-display);font-size:26px;font-weight:600;line-height:1.15;letter-spacing:.01em}
+.name .ja{font-size:12.5px;color:var(--ink-soft)}
+.catch{margin:0;font-weight:500;font-size:14.5px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}
+dt{color:var(--ink-soft);white-space:nowrap}
+dd{margin:0;min-width:0}
+.price{letter-spacing:.1em;color:var(--rose-deep);font-weight:700}
+.price .off{color:var(--line)}
+.price small{letter-spacing:0;color:var(--ink-soft);font-weight:400;margin-left:6px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;background:var(--chip);color:var(--ink);padding:2px 10px;border-radius:999px}
+.btn{margin-top:auto;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;
+  background:var(--ink);color:var(--surface);font-weight:500;font-size:14px;padding:11px 16px;border-radius:999px;transition:background .2s}
+.btn:hover{background:var(--rose-deep)}
+.btn svg{width:14px;height:14px}
+
+.empty{padding:40px 20px;text-align:center;color:var(--ink-soft);background:var(--surface);border-radius:20px;border:1px dashed var(--line)}
+footer{padding-block:0 40px;color:var(--ink-soft);font-size:12px}
+footer p{margin:0;max-width:70ch}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover{transform:none}}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+.navlink{color:var(--rose-deep);font-size:14px;font-weight:500;text-decoration:none}
+.navlink:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">KIDS &amp; BABY BRAND MAP</div>
+    <h1>SNSで愛される、<em>little</em> wardrobe 案内</h1>
+    <p class="lead">淡色・海外セレクト・プチプラ・上質。いま22〜40歳のママたちに選ばれている子供服ブランドを、アイテムのカテゴリ別にまとめました。</p>
+    <p style="margin:12px 0 0"><a class="navlink" href="index.html">← ポジショニングマップに戻る</a></p>
+  </div>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="カテゴリ">
+      <button class="tab" role="tab" id="tab-romper" data-cat="romper" aria-selected="true">ロンパース・肌着 <span class="n"></span></button>
+      <button class="tab" role="tab" id="tab-knit" data-cat="knit" aria-selected="false">ニット・トップス <span class="n"></span></button>
+      <button class="tab" role="tab" id="tab-goods" data-cat="goods" aria-selected="false">小物・その他 <span class="n"></span></button>
+    </div>
+    <div class="filters" id="filters" aria-label="重視ポイントで絞り込み">
+      <span class="lbl">重視ポイント</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="cat-head"><h2 id="catTitle"></h2><p id="catNote"></p></div>
+    <div class="grid" id="grid" role="tabpanel"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>価格帯は ¥＝プチプラ／¥¥＝ミドル／¥¥¥＝ハイ の目安です。取扱商品・価格は時期により変わるため、最新情報は各公式サイトでご確認ください。</p>
+  </div>
+</footer>
+
+<script>
+const CATS = {
+  romper:{title:"ロンパース・肌着",note:"毎日の着替えに。肌ざわりと洗濯耐久性、写真映えで選ぶベビーの基本"},
+  knit:{title:"ニット・トップス・アウター",note:"お出かけ・季節のイベントに。親子リンクやトレンド感が鍵"},
+  goods:{title:"小物・アクセサリー",note:"スタイ・帽子・靴下・おくるみ。出産祝いギフトにも"}
+};
+const FOCUS = ["淡色・映え","海外セレクト","コスパ","品質重視","ギフト向き","親子リンク"];
+const SW = {rose:"var(--rose)",sand:"var(--sand)",sage:"var(--sage)"};
+
+const BRANDS = [
+  // ロンパース・肌着
+  {cat:"romper",en:"ululu",ja:"ウルル",origin:"SELECT SHOP",sw:"sand",price:2,
+   catch:"ナチュラルで淡い色合い。SNSで注目が集まるベビー服ショップ",
+   sns:"淡色コーデやニューボーンフォトの投稿で見かけることが多い",mood:"ナチュラル・やさしいくすみカラー",
+   focus:["淡色・映え","ギフト向き"],url:"https://ululu-shop.jp/"},
+  {cat:"romper",en:"House on the hill",ja:"ハウスオンザヒル",origin:"IMPORT SELECT",sw:"sage",price:2,
+   catch:"海外セレクトのおしゃれなベビー服・ロンパースが揃う",
+   sns:"「人と被らない」「海外っぽい」という声が多い",mood:"北欧・欧州テイストのインポート感",
+   focus:["海外セレクト","淡色・映え"],url:"https://www.houseonthehillbaby.com/"},
+  {cat:"romper",en:"BALOU Bebe",ja:"バルーベベ",origin:"SELECT SHOP",sw:"rose",price:2,
+   catch:"洗練された海外テイストと、素材にこだわったロンパース",
+   sns:"シンプルで上品、記念日の撮影に選ばれやすい",mood:"洗練・ミニマル・海外ベビー",
+   focus:["海外セレクト","淡色・映え"],url:"https://balen-bebe.myshopify.com/"},
+  {cat:"romper",en:"UNIQLO",ja:"ユニクロ",origin:"JAPAN",sw:"sand",price:1,
+   catch:"定番肌着の耐久性とコスパは抜群",
+   sns:"「何度洗ってもヨレにくい」「まとめ買いしやすい」",mood:"ベーシック・デイリー",
+   focus:["コスパ","品質重視"],url:"https://www.uniqlo.com/jp/ja/baby"},
+  {cat:"romper",en:"PETIT BATEAU",ja:"プチバトー",origin:"FRANCE",sw:"sage",price:3,
+   catch:"品質とデザイン性に優れたフランス発の定番",
+   sns:"出産祝いの定番。肌着の着心地の評価が高い",mood:"フレンチ・マリンボーダー",
+   focus:["品質重視","ギフト向き","海外セレクト"],url:"https://www.petit-bateau.co.jp/"},
+  {cat:"romper",en:"gelato pique",ja:"ジェラート ピケ",origin:"JAPAN",sw:"rose",price:3,
+   catch:"もこもこ素材と淡いカラーで、ギフトにもSNSにも人気",
+   sns:"ママとのお揃いルームウェア投稿が多い",mood:"ふわもこ・パステル",
+   focus:["ギフト向き","淡色・映え","親子リンク"],url:"https://gelatopique.com/"},
+  {cat:"romper",en:"MARLMARL",ja:"マールマール",origin:"JAPAN",sw:"rose",price:3,
+   catch:"おしゃれなデザインのロンパースとスタイ",
+   sns:"スタイのデザイン性で「出産祝いにもらって嬉しい」の声",mood:"大人っぽいアート感",
+   focus:["ギフト向き","淡色・映え"],url:"https://www.marlmarl.com/"},
+  {cat:"romper",en:"Birthday",ja:"バースデイ",origin:"JAPAN",sw:"sand",price:1,
+   catch:"淡色好きママに圧倒的人気のプチプラブランド",
+   sns:"「バースデイ購入品」の紹介投稿が定番化",mood:"淡色・くすみ・トレンド",
+   focus:["コスパ","淡色・映え"],url:"https://www.shesaim.com/birthday/"},
+  // ニット・トップス・アウター
+  {cat:"knit",en:"petit main",ja:"プティマイン",origin:"JAPAN",sw:"rose",price:2,
+   catch:"トレンド感抜群、SNSで大人気の定番ブランド",
+   sns:"新作の着画レビューが多く、季節ごとに話題になる",mood:"甘めガーリー・トレンド",
+   focus:["淡色・映え","コスパ"],url:"https://www.narumiya-online.jp/shop/brand/petitmain/"},
+  {cat:"knit",en:"pairmanon",ja:"ペアマノン",origin:"JAPAN",sw:"sand",price:1,
+   catch:"親子リンクコーデが叶う、くすみカラーが人気",
+   sns:"家族でお揃いの写真投稿が多い",mood:"くすみカラー・カジュアル",
+   focus:["親子リンク","コスパ","淡色・映え"],url:"https://pairmanon.com/"},
+  {cat:"knit",en:"ZARA KIDS",ja:"ザラ キッズ",origin:"SPAIN",sw:"sage",price:2,
+   catch:"海外トレンドを取り入れた、大人顔負けのおしゃれニット",
+   sns:"「海外キッズみたい」なコーデ投稿に多数登場",mood:"モード・ヨーロピアン",
+   focus:["海外セレクト","淡色・映え"],url:"https://www.zara.com/jp/ja/kids-l1.html"},
+  {cat:"knit",en:"GAP / babyGap",ja:"ギャップ／ベビーギャップ",origin:"USA",sw:"sand",price:2,
+   catch:"定番のクマ耳ニットやロゴアイテムに定評",
+   sns:"クマ耳ニットは冬の定番写真アイテム",mood:"アメカジ・ベーシック",
+   focus:["淡色・映え","コスパ"],url:"https://www.gap.co.jp/"},
+  {cat:"knit",en:"familiar",ja:"ファミリア",origin:"JAPAN",sw:"rose",price:3,
+   catch:"上質なニットと刺繍アイテムで、ママの憧れ",
+   sns:"お宮参り・入園など節目の装いに選ばれる",mood:"クラシック・上品",
+   focus:["品質重視","ギフト向き"],url:"https://familiar.co.jp/"},
+  // 小物・アクセサリー
+  {cat:"goods",en:"aden + anais",ja:"エイデンアンドアネイ",origin:"USA",sw:"sage",price:2,
+   catch:"大定番のおくるみ・ガーゼアイテム",
+   sns:"モスリンおくるみは出産準備リストの常連",mood:"柄が豊富・軽やか",
+   focus:["ギフト向き","海外セレクト","品質重視"],url:"https://www.adenandanais.co.jp/"},
+  {cat:"goods",en:"10mois",ja:"ディモワ",origin:"JAPAN",sw:"sand",price:2,
+   catch:"ほしのふせんやおくるみなど、ナチュラルなデザインが人気",
+   sns:"月齢フォトの小物として登場しやすい",mood:"ナチュラル・やさしい",
+   focus:["ギフト向き","淡色・映え"],url:"https://www.10mois.com/"},
+  {cat:"goods",en:"MIKI HOUSE",ja:"ミキハウス",origin:"JAPAN",sw:"rose",price:3,
+   catch:"ファーストシューズや靴下など、品質重視の小物",
+   sns:"ファーストシューズの記念写真が定番",mood:"上質・長く使える",
+   focus:["品質重視","ギフト向き"],url:"https://www.mikihouse.co.jp/"},
+  {cat:"goods",en:"devirock",ja:"デビロック",origin:"JAPAN",sw:"sage",price:1,
+   catch:"日常使いできるキャップや靴下などのプチプラ小物",
+   sns:"「保育園用にまとめ買い」というレビューが多い",mood:"シンプル・デイリー",
+   focus:["コスパ"],url:"https://devirockstore.net/"}
+];
+
+const PRICE_LABEL = {1:"プチプラ",2:"ミドル",3:"ハイ"};
+const grid = document.getElementById("grid");
+const tabs = [...document.querySelectorAll(".tab")];
+const filtersEl = document.getElementById("filters");
+let cat = "romper", focus = new Set();
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const priceHTML = p => `<span class="price">${"¥".repeat(p)}<span class="off">${"¥".repeat(3-p)}</span><small>${PRICE_LABEL[p]}</small></span>`;
+const arrow = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg>`;
+
+FOCUS.forEach((f,i) => {
+  const b = document.createElement("button");
+  b.className = "chip"; b.id = "focus-"+i; b.textContent = f; b.setAttribute("aria-pressed","false");
+  b.addEventListener("click", () => {
+    focus.has(f) ? focus.delete(f) : focus.add(f);
+    b.setAttribute("aria-pressed", focus.has(f)); render();
+  });
+  filtersEl.appendChild(b);
+});
+
+function render(){
+  tabs.forEach(t => {
+    const c = t.dataset.cat;
+    t.setAttribute("aria-selected", c === cat);
+    t.querySelector(".n").textContent = BRANDS.filter(b => b.cat === c).length;
+  });
+  grid.setAttribute("aria-labelledby","tab-"+cat);
+  document.getElementById("catTitle").textContent = CATS[cat].title;
+  document.getElementById("catNote").textContent = CATS[cat].note;
+  const list = BRANDS.filter(b => b.cat === cat && [...focus].every(f => b.focus.includes(f)));
+  grid.innerHTML = list.length ? list.map(b => `
+    <article class="card">
+      <div class="swatch" style="background:${SW[b.sw]}"><span class="origin">${esc(b.origin)}</span></div>
+      <div class="body">
+        <div class="name"><span class="en">${esc(b.en)}</span><span class="ja">${esc(b.ja)}</span></div>
+        <p class="catch">${esc(b.catch)}</p>
+        <dl>
+          <dt>口コミ傾向</dt><dd>${esc(b.sns)}</dd>
+          <dt>雰囲気</dt><dd>${esc(b.mood)}</dd>
+          <dt>価格帯</dt><dd>${priceHTML(b.price)}</dd>
+        </dl>
+        <div class="tags">${b.focus.map(f => `<span class="tag">${esc(f)}</span>`).join("")}</div>
+        <a class="btn" href="${b.url}" target="_blank" rel="noopener noreferrer">公式サイトを見る ${arrow}</a>
+      </div>
+    </article>`).join("")
+    : `<div class="empty">この条件に合うブランドはこのカテゴリにありません。重視ポイントを減らすか、別のタブを見てみてください。</div>`;
+}
+
+tabs.forEach(t => t.addEventListener("click", () => {
+  cat = t.dataset.cat; render();
+  try{ localStorage.setItem("kbm-cat", cat); }catch(e){}
+}));
+tabs.forEach((t,i) => t.addEventListener("keydown", e => {
+  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  const n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+  n.focus(); n.click();
+}));
+
+const hash = location.hash.slice(1);
+if (CATS[hash]) cat = hash;
+else { try{ const s = localStorage.getItem("kbm-cat"); if (CATS[s]) cat = s; }catch(e){} }
+render();
+</script>
+</body>
+</html>

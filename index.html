@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>子供服ポジショニングマップ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+<style>
+/* Layout: header → category tabs → [axis-framed 2×2 plot | detail panel] (stacks on phones) → brand chip list */
+:root{
+  --bg:#f8f3ef;--surface:#fffdfb;--ink:#4a3f3c;--ink-soft:#8a7b76;
+  --rose:#c99a9a;--rose-deep:#a87272;--sand:#e8dccf;--sage:#a9b3a0;
+  --line:#eadfd7;--chip:#f1e6df;--on-accent:#fffaf7;
+  --q-tl:#f6e9e6;--q-tr:#f3ece4;--q-bl:#eef0e9;--q-br:#f4f1ec;
+  --shadow:0 1px 2px rgba(120,90,80,.06),0 8px 24px rgba(120,90,80,.08);
+  --f-display:"Cormorant Garamond","Times New Roman",serif;
+  --f-body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#231d1c;--surface:#2d2624;--ink:#f1e7e2;--ink-soft:#b8a8a2;--rose:#d4a5a5;--rose-deep:#e3b8b8;
+  --sand:#5a4b44;--sage:#9eab95;--line:#3d3431;--chip:#3a302d;--on-accent:#2a2120;
+  --q-tl:#33292a;--q-tr:#312a26;--q-bl:#2a2c27;--q-br:#2e2926;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#231d1c;--surface:#2d2624;--ink:#f1e7e2;--ink-soft:#b8a8a2;--rose:#d4a5a5;--rose-deep:#e3b8b8;
+  --sand:#5a4b44;--sage:#9eab95;--line:#3d3431;--chip:#3a302d;--on-accent:#2a2120;
+  --q-tl:#33292a;--q-tr:#312a26;--q-bl:#2a2c27;--q-br:#2e2926;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1160px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--rose-deep);outline-offset:2px}
+
+header{padding-block:36px 20px}
+.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--rose-deep);font-weight:500}
+h1{font-size:clamp(24px,4.2vw,34px);line-height:1.35;margin:.25em 0 .35em;text-wrap:balance}
+h1 em{font-family:var(--f-display);font-style:italic;font-weight:500;color:var(--rose-deep);font-size:1.15em}
+.lead{color:var(--ink-soft);max-width:62ch;margin:0;font-size:14px}
+
+.tabs{display:flex;gap:6px;background:var(--chip);padding:4px;border-radius:999px;width:fit-content;max-width:100%;overflow-x:auto;margin-bottom:18px}
+.tab{appearance:none;border:0;background:transparent;color:var(--ink-soft);font-weight:500;font-size:14px;padding:8px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+@media (max-width:420px){.tab{padding:8px 12px;font-size:13px}}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start;padding-bottom:20px}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+
+/* plot with axis frame */
+.frame{background:var(--surface);border-radius:24px;box-shadow:var(--shadow);padding:16px 16px 12px 8px;
+  display:grid;grid-template-columns:28px minmax(0,1fr);grid-template-rows:auto auto;gap:6px 6px;min-width:0}
+.yaxis{writing-mode:vertical-rl;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink-soft);letter-spacing:.08em}
+.yaxis .hi{color:var(--rose-deep);font-weight:700}
+.yaxis .arrow{flex:1;width:1px;background:linear-gradient(var(--rose),var(--sage));margin-block:10px;border-radius:1px}
+.xaxis{grid-column:2;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-soft)}
+.xaxis .arrow{flex:1;height:1px;background:linear-gradient(90deg,var(--rose),var(--sand))}
+.xaxis span{white-space:nowrap}
+.xaxis .l{color:var(--rose-deep);font-weight:700}
+
+.plot{position:relative;aspect-ratio:5/4;max-width:100%;border-radius:16px;overflow:hidden;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+@media (max-width:600px){.plot{aspect-ratio:1/1.05}}
+.q{position:relative;padding:10px 12px;font-size:11px;letter-spacing:.06em;color:var(--ink-soft)}
+.q:nth-child(1){background:var(--q-tl)}
+.q:nth-child(2){background:var(--q-tr);text-align:right}
+.q:nth-child(3){background:var(--q-bl);display:flex;align-items:flex-end}
+.q:nth-child(4){background:var(--q-br);display:flex;align-items:flex-end;justify-content:flex-end}
+.plot::before,.plot::after{content:"";position:absolute;background:var(--line);pointer-events:none}
+.plot::before{left:50%;top:0;bottom:0;width:1px}
+.plot::after{top:50%;left:0;right:0;height:1px}
+.pts{position:absolute;inset:0}
+
+.pt{position:absolute;transform:translate(-50%,-7px);appearance:none;border:0;background:none;padding:0;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;z-index:1;transition:transform .25s ease}
+.pt .dot{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent);transition:box-shadow .2s}
+.pt .lb{font-family:var(--f-display);font-weight:600;font-size:15px;line-height:1;white-space:nowrap;
+  background:var(--surface);padding:4px 9px;border-radius:999px;box-shadow:0 1px 3px rgba(80,60,55,.12);transition:background .2s,color .2s}
+.pt.al{align-items:flex-start;transform:translate(-7px,-7px)}
+.pt.ar{align-items:flex-end;transform:translate(calc(-100% + 7px),-7px)}
+.pt:hover,.pt.on{z-index:3}
+.pt.on .dot{box-shadow:0 0 0 7px color-mix(in srgb,var(--c) 30%,transparent)}
+.pt.on .lb{background:var(--ink);color:var(--surface)}
+@media (max-width:600px){.pt .lb{font-size:13px;padding:3px 7px}.pt .dot{width:12px;height:12px}}
+
+.legend{grid-column:2;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11.5px;color:var(--ink-soft);padding-top:4px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:0}
+
+/* detail panel */
+.panel{background:var(--surface);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);min-width:0}
+@media (max-width:860px){.panel{position:static}}
+.panel .band{height:10px;background:var(--c)}
+.panel .in{padding:18px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.p-cat{font-size:11.5px;letter-spacing:.12em;color:var(--ink-soft)}
+.p-name .en{display:block;font-family:var(--f-display);font-size:32px;font-weight:600;line-height:1.1}
+.p-name .ja{font-size:13px;color:var(--ink-soft)}
+.pos{display:flex;flex-wrap:wrap;gap:6px}
+.pos span{font-size:12px;padding:3px 11px;border-radius:999px;background:var(--chip)}
+.pos .price{background:var(--c);color:var(--on-accent);font-weight:500}
+.p-catch{margin:0;font-weight:500}
+.p-dl{margin:0;display:grid;gap:10px}
+.p-dl div{display:grid;gap:2px}
+.p-dl dt{font-size:12px;color:var(--ink-soft);letter-spacing:.06em}
+.p-dl dd{margin:0;font-size:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;background:var(--ink);color:var(--surface);
+  font-weight:500;font-size:14px;padding:12px 16px;border-radius:999px;transition:background .2s}
+.btn:hover{background:var(--rose-deep)}
+.btn svg{width:14px;height:14px}
+.hint{font-size:12px;color:var(--ink-soft);margin:0}
+
+/* brand list */
+.list{padding-block:4px 20px}
+.list h2{font-size:14px;margin:0 0 10px;color:var(--ink-soft);font-weight:500;letter-spacing:.06em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{appearance:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px 6px 10px;cursor:pointer;
+  display:flex;align-items:center;gap:8px;font-size:13px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--c)}
+.chip small{color:var(--ink-soft);font-size:11.5px}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--chip)}
+
+footer{padding-block:0 40px;color:var(--ink-soft);font-size:12px}
+footer p{margin:0;max-width:72ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
+.navlink{color:var(--rose-deep);font-size:14px;font-weight:500;text-decoration:none}
+.navlink:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">POSITIONING MAP · KIDS &amp; BABY</div>
+    <h1>価格帯 × テイストで見る、<em>little</em> brands</h1>
+    <p class="lead">縦軸は価格帯、横軸はデザインのテイスト。ブランド名にカーソルを合わせるかタップすると、概要と口コミの特徴、公式サイトへのリンクが表示されます。</p>
+    <p style="margin:12px 0 0"><a class="navlink" href="brand-list.html">カテゴリ別ブランド一覧を見る →</a></p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs" role="tablist" aria-label="カテゴリ">
+    <button class="tab" role="tab" id="tab-romper" data-cat="romper" aria-selected="true">ロンパース・肌着</button>
+    <button class="tab" role="tab" id="tab-knit" data-cat="knit" aria-selected="false">ニット・トップス</button>
+    <button class="tab" role="tab" id="tab-goods" data-cat="goods" aria-selected="false">小物・アクセサリー</button>
+  </div>
+
+  <div class="layout">
+    <section class="frame" aria-label="ポジショニングマップ">
+      <div class="yaxis" aria-hidden="true"><span class="hi">高価格・プレミアム</span><span class="arrow"></span><span>お手頃・プチプラ</span></div>
+      <div class="plot" id="plot" role="tabpanel">
+        <div class="q">プレミアム × トレンド</div>
+        <div class="q">プレミアム × 定番</div>
+        <div class="q">プチプラ × トレンド</div>
+        <div class="q">プチプラ × 定番</div>
+        <div class="pts" id="pts"></div>
+      </div>
+      <div class="xaxis" aria-hidden="true"><span class="l">ナチュラル・淡色・トレンド</span><span class="arrow"></span><span>定番・王道・シンプル</span></div>
+      <div class="legend"><span><i style="background:var(--rose-deep)"></i>高価格帯</span><span><i style="background:var(--rose)"></i>中価格帯</span><span><i style="background:var(--sage)"></i>プチプラ</span></div>
+    </section>
+
+    <aside class="panel" id="panel" aria-live="polite"></aside>
+  </div>
+
+  <section class="list">
+    <h2>このカテゴリのブランド</h2>
+    <div class="chips" id="chips"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>配置は公開情報と一般的な評判をもとにした相対的な目安です。価格・取扱商品は時期により変わるため、最新情報は各公式サイトでご確認ください。</p>
+  </div>
+</footer>
+
+<script>
+const CAT_NAME = {romper:"ロンパース・肌着",knit:"ニット・トップス・アウター",goods:"小物・アクセサリー"};
+const TIER = {
+  3:{label:"高価格帯",c:"var(--rose-deep)"},
+  2.5:{label:"中〜高価格帯",c:"var(--rose)"},
+  2:{label:"中価格帯",c:"var(--rose)"},
+  1:{label:"プチプラ",c:"var(--sage)"}
+};
+// x: 0=ナチュラル・淡色・トレンド → 100=定番・王道・シンプル / y: 0=プチプラ → 100=プレミアム
+const BRANDS = [
+  {cat:"romper",en:"ululu",ja:"ウルル",x:24,y:50,tier:2,taste:"ナチュラル・淡色トレンド",
+   catch:"ナチュラルで淡い色合い。SNSで注目が集まるベビー服ショップ",sns:"淡色コーデやニューボーンフォトの投稿で見かけることが多い",url:"https://ululu-shop.jp/"},
+  {cat:"romper",en:"House on the hill",ja:"ハウスオンザヒル",x:22,y:72,tier:3,taste:"海外ナチュラル・トレンド",
+   catch:"海外セレクトのおしゃれなベビー服・ロンパースが揃うショップ",sns:"「人と被らない」「海外っぽい」という声が多い",url:"https://www.houseonthehillbaby.com/"},
+  {cat:"romper",en:"BALOU Bebe",ja:"バルーベベ",x:40,y:84,tier:3,taste:"上品・洗練トレンド",
+   catch:"洗練された海外テイストと、素材にこだわったロンパース",sns:"シンプルで上品。記念日の撮影に選ばれやすい",url:"https://balen-bebe.myshopify.com/"},
+  {cat:"romper",en:"UNIQLO",ja:"ユニクロ",x:84,y:12,tier:1,taste:"定番・シンプル",
+   catch:"定番肌着の耐久性とコスパは抜群",sns:"「何度洗ってもヨレにくい」「まとめ買いしやすい」",url:"https://www.uniqlo.com/jp/ja/baby"},
+  {cat:"romper",en:"PETIT BATEAU",ja:"プチバトー",x:78,y:88,tier:3,taste:"定番・フレンチナチュラル",
+   catch:"品質とデザイン性に優れたフランス発の定番",sns:"出産祝いの定番。肌着の着心地の評価が高い",url:"https://www.petit-bateau.co.jp/"},
+  {cat:"romper",en:"gelato pique",ja:"ジェラート ピケ",x:52,y:62,tier:2.5,taste:"ギフト・トレンド",
+   catch:"もこもこ素材と淡いカラーで、ギフトにもSNSにも人気",sns:"ママとのお揃いルームウェア投稿が多い",url:"https://gelatopique.com/"},
+  {cat:"romper",en:"MARLMARL",ja:"マールマール",x:12,y:92,tier:3,taste:"デザイン・映え",
+   catch:"おしゃれなデザインのロンパースとスタイ",sns:"スタイのデザイン性で「出産祝いにもらって嬉しい」の声",url:"https://www.marlmarl.com/"},
+  {cat:"romper",en:"Birthday",ja:"バースデイ",x:14,y:14,tier:1,taste:"淡色トレンド",
+   catch:"淡色好きママに圧倒的人気のプチプラブランド",sns:"「バースデイ購入品」の紹介投稿が定番化",url:"https://www.shesaim.com/birthday/"},
+
+  {cat:"knit",en:"petit main",ja:"プティマイン",x:22,y:46,tier:2,taste:"トレンド",
+   catch:"トレンド感抜群、SNSで大人気の定番ブランド",sns:"新作の着画レビューが多く、季節ごとに話題になる",url:"https://www.narumiya-online.jp/shop/brand/petitmain/"},
+  {cat:"knit",en:"pairmanon",ja:"ペアマノン",x:16,y:14,tier:1,taste:"トレンド・くすみカラー",
+   catch:"親子リンクコーデが叶う、くすみカラーが人気",sns:"家族でお揃いの写真投稿が多い",url:"https://pairmanon.com/"},
+  {cat:"knit",en:"ZARA KIDS",ja:"ザラ キッズ",x:40,y:60,tier:2,taste:"海外トレンド",
+   catch:"海外トレンドを取り入れた、大人顔負けのおしゃれニット",sns:"「海外キッズみたい」なコーデ投稿に多数登場",url:"https://www.zara.com/jp/ja/kids-l1.html"},
+  {cat:"knit",en:"GAP / babyGap",ja:"ギャップ／ベビーギャップ",x:74,y:50,tier:2,taste:"王道・カジュアル",
+   catch:"定番のクマ耳ニットやロゴアイテムに定評",sns:"クマ耳ニットは冬の定番写真アイテム",url:"https://www.gap.co.jp/"},
+  {cat:"knit",en:"familiar",ja:"ファミリア",x:82,y:88,tier:3,taste:"伝統・王道上質",
+   catch:"上質なニットと刺繍アイテムで、ママの憧れ",sns:"お宮参り・入園など節目の装いに選ばれる",url:"https://familiar.co.jp/"},
+
+  {cat:"goods",en:"aden + anais",ja:"エイデンアンドアネイ",x:64,y:66,tier:2.5,taste:"定番ガーゼ",
+   catch:"大定番のおくるみ・ガーゼアイテム",sns:"モスリンおくるみは出産準備リストの常連",url:"https://www.adenandanais.co.jp/"},
+  {cat:"goods",en:"10mois",ja:"ディモワ",x:24,y:70,tier:2.5,taste:"ナチュラル・ギフト",
+   catch:"ほしのふせんやおくるみなど、ナチュラルなデザインが人気",sns:"月齢フォトの小物として登場しやすい",url:"https://www.10mois.com/"},
+  {cat:"goods",en:"MIKI HOUSE",ja:"ミキハウス",x:84,y:88,tier:3,taste:"王道・品質重視",
+   catch:"ファーストシューズや靴下など、品質重視の小物",sns:"ファーストシューズの記念写真が定番",url:"https://www.mikihouse.co.jp/"},
+  {cat:"goods",en:"devirock",ja:"デビロック",x:80,y:14,tier:1,taste:"定番・デイリー",
+   catch:"日常使いできるキャップや靴下などのプチプラ小物",sns:"「保育園用にまとめ買い」というレビューが多い",url:"https://devirockstore.net/"}
+];
+
+const pts = document.getElementById("pts"), panel = document.getElementById("panel"), chips = document.getElementById("chips");
+const tabs = [...document.querySelectorAll(".tab")];
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const arrow = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 3h7v7M13 3 4 12"/></svg>`;
+const narrow = matchMedia("(max-width:860px)");
+let cat = "romper", active = null;
+
+function list(){ return BRANDS.filter(b => b.cat === cat); }
+
+function select(b, fromTap){
+  active = b;
+  document.querySelectorAll(".pt").forEach(el => el.classList.toggle("on", el.dataset.en === b.en));
+  document.querySelectorAll(".chip").forEach(el => el.setAttribute("aria-pressed", el.dataset.en === b.en));
+  const t = TIER[b.tier];
+  panel.style.setProperty("--c", t.c);
+  panel.innerHTML = `
+    <div class="band"></div>
+    <div class="in">
+      <div class="p-cat">${CAT_NAME[b.cat]}</div>
+      <div class="p-name"><span class="en">${esc(b.en)}</span><span class="ja">${esc(b.ja)}</span></div>
+      <div class="pos"><span class="price">${t.label}</span><span>${esc(b.taste)}</span></div>
+      <p class="p-catch">${esc(b.catch)}</p>
+      <dl class="p-dl">
+        <div><dt>口コミ・SNSの傾向</dt><dd>${esc(b.sns)}</dd></div>
+      </dl>
+      <a class="btn" href="${b.url}" target="_blank" rel="noopener noreferrer">公式サイトを見る ${arrow}</a>
+      <p class="hint">マップ上の別のブランドを選ぶと切り替わります。</p>
+    </div>`;
+  if (fromTap && narrow.matches){
+    const r = panel.getBoundingClientRect();
+    if (r.top > innerHeight - 120) panel.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block:"nearest"});
+  }
+}
+
+function render(){
+  tabs.forEach(t => t.setAttribute("aria-selected", t.dataset.cat === cat));
+  document.getElementById("plot").setAttribute("aria-labelledby", "tab-"+cat);
+  const items = list();
+  pts.innerHTML = items.map(b => {
+    const align = b.x < 18 ? "al" : b.x > 82 ? "ar" : "";
+    return `<button class="pt ${align}" data-en="${esc(b.en)}" style="left:${b.x}%;top:${100-b.y}%;--c:${TIER[b.tier].c}"
+      aria-label="${esc(b.en)}（${TIER[b.tier].label}・${esc(b.taste)}）"><span class="dot"></span><span class="lb">${esc(b.en)}</span></button>`;
+  }).join("");
+  chips.innerHTML = items.map(b => `<button class="chip" data-en="${esc(b.en)}" style="--c:${TIER[b.tier].c}" aria-pressed="false"><i></i>${esc(b.en)}<small>${esc(b.ja)}</small></button>`).join("");
+  const find = el => items.find(b => b.en === el.dataset.en);
+  pts.querySelectorAll(".pt").forEach(el => {
+    el.addEventListener("mouseenter", () => { if (matchMedia("(hover:hover)").matches) select(find(el)); });
+    el.addEventListener("focus", () => select(find(el)));
+    el.addEventListener("click", () => select(find(el), true));
+  });
+  chips.querySelectorAll(".chip").forEach(el => el.addEventListener("click", () => select(find(el), true)));
+  select(items[0]);
+}
+
+tabs.forEach((t,i) => {
+  t.addEventListener("click", () => { cat = t.dataset.cat; render(); try{ localStorage.setItem("kpm-cat", cat); }catch(e){} });
+  t.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+    n.focus(); n.click();
+  });
+});
+
+const hash = location.hash.slice(1);
+if (CAT_NAME[hash]) cat = hash;
+else { try{ const s = localStorage.getItem("kpm-cat"); if (CAT_NAME[s]) cat = s; }catch(e){} }
+render();
+</script>
+</body>
+</html>
